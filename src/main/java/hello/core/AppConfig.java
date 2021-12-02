@@ -12,11 +12,18 @@ import hello.core.order.OrderServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+// 설정정보 담당
+// Configuration이 붙은것도 빈으로 등록이 된다.
 @Configuration
 public class AppConfig {
 
     // @Bean memberService -> new MemoryMemberRepository()
     // @Bean orderService -> new MemoryMemberRepository()
+
+    /*
+        @Bean을 입력하면 스프링 컨테이너에 등록된다.
+        스프링 빈은  @Bean이 붙은 메서드의 명을 스프링 빈의 이름으로 사용한다.
+     */
 
     @Bean
     public MemberService memberService() {

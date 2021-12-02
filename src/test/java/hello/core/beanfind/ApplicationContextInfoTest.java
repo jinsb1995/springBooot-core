@@ -6,36 +6,47 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.Arrays;
+
 public class ApplicationContextInfoTest {
 
     AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
 
-
     @Test
     @DisplayName("모든 빈 출력하기")
     void findAllBean() {
+
         String[] beanDefinitionNames = ac.getBeanDefinitionNames();
 
         for (String beanDefinitionName : beanDefinitionNames) {
             Object bean = ac.getBean(beanDefinitionName);
-            System.out.println("name === " + beanDefinitionName + " , asdsadasdasd === " + bean);
+            System.out.println("name = " + beanDefinitionName + ", object = " + bean);
         }
+
+        System.out.println("==============================================");
+
+        Arrays.asList(beanDefinitionNames).stream().forEach((val) -> {
+            Object bean = ac.getBean(val);
+            System.out.println("name = " + val + ", object = " + bean);
+        });
+
     }
 
     @Test
-    @DisplayName("모든 빈 출력하기")
+    @DisplayName("애플리케이션 빈 출력하기")
     void findApplicationBean() {
         String[] beanDefinitionNames = ac.getBeanDefinitionNames();
-
         for (String beanDefinitionName : beanDefinitionNames) {
-            BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionName);// 빈 하나하나에 대한 정보
+            BeanDefinition beanDefinition = ac.getBeanDefinition(beanDefinitionName);
 
-            // Role ROLE_APPLICATION: 내가 직접 등록한 애플리케이션 빈
+            // Role ROLE_APPLICATION: 내가 사용하려고 직접 등록한 애플리케이션 빈
             // Role ROLE_INFRASTRUCTURE: 스프링이 내부에서 사용하는 빈
-            if(beanDefinition.getRole() == BeanDefinition.ROLE_APPLICATION) {
+            if (beanDefinition.getRole() == BeanDefinition.ROLE_INFRASTRUCTURE) {
                 Object bean = ac.getBean(beanDefinitionName);
-                System.out.println("name === " + beanDefinitionName + " , asdsadasdasd === " + bean);
+                System.out.println("name = " + beanDefinitionName + ", object = " + bean);
             }
         }
+
     }
+
 }
