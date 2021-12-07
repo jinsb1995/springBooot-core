@@ -14,6 +14,17 @@ import org.springframework.context.annotation.Configuration;
 
 // 설정정보 담당
 // Configuration이 붙은것도 빈으로 등록이 된다.
+
+/**
+ *  Configuration이 없어도 CGLIB가 동작하긴 하는데
+ *  Configuration없이 @Bean 만 선언한다면  인스턴스를 새로 생성한 뒤 넣어주게 되니까 싱글톤이 깨진다.
+ *
+ *  **  정리 **
+ * @Bean 만 사용해도 스프링 빈으로 등록이 되지만, 싱글톤을 보장하지 않는다.
+ *     memberRepository() 처럼 의존관계 주입이 필요해서 메서드를 직접 호출할 때 싱글톤을 보장하지 않는다.
+ *
+ * configuration이 없으면 CGLIB가 동작하지 않는다.
+ */
 @Configuration
 public class AppConfig {
 
@@ -52,39 +63,70 @@ public class AppConfig {
     }
 
 
+/**
+    ! ! ! ! !  CGLIB 예상 코드 ! ! ! ! !
+
+    @Bean
+    public MemberRepository memberRepository() {
+
+        if (memoryMemberRepository 가 이미 스프링 컨테이너에 등록되어 있으면?) {
+            return 스프링 컨테이너에서 찾아서 반환;
+        } else {
+            // 스프링 컨테이너에 없으면
+
+            기존 로직을 호출해서 MemoryMemberRepository를 생성하고 스프링 컨테이너에 등록
+            System.out.println("call ------- AppConfig.memberRepository");
+            return new MemoryMemberRepository();
+        }
+
+    }
+
+    @Bean 이 붙은 메서드마다 이미 스프링 빈이 존재하면 존재하는 빈을 반환하고,
+    스프링 빈이 없으면 생성해서 스프링 빈으로 등록하고 반환하는 코드가 동적으로 만들어진다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
 
 }
 
 
 
-//    // 이제 애플리케이션에 대한 환경 구성에 대한건 여기서 설정해준다.
-//
-//    public MemberService memberService() {
-//        return new MemberServiceImpl(memberRepository());
-//    }
-//
-//    public OrderService orderService() {
-////        이걸 하려면 Impl에 미리 생성자를 만들어 놓아야한다. 기억해라!!!!!!!
-//        return new OrderServiceImpl(memberRepository(), discountPolicy());
-//    }
-//
-//    // 역할이 드러나게 리팩터링
-//    // 중복이 제거
-//    // 역할과 구현 클래스가 한눈에 들어온다.
-//    public MemberRepository memberRepository() {
-//        return new MemoryMemberRepository();
-//    }
-//    public DiscountPolicy discountPolicy() {
-////        return new FixDiscountPolicy();
-//        return new RateDiscountPolicy();
-//    }
 
 
-//    public MemberService memberService() {
-//        return new MemberServiceImpl(new MemoryMemberRepository());
-//    }
-//
-//    public OrderService orderService() {
-////        이걸 하려면 Impl에 미리 생성자를 만들어 놓아야한다. 기억해라!!!!!!!
-//        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
-//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -9,7 +9,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
-    @Autowired   // ac.getBean(MemberRepository.class)
+    @Autowired   // ac.getBean(MemberRepository.class)  이런식으로 동작한다.
     public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
@@ -29,12 +29,9 @@ public class MemberServiceImpl implements MemberService {
 
     // 테스트 용도
     public MemberRepository getMemberRepository() {
+        // 저 위에 MemoryMemberRepository가 들어갈 예정이다.
         return memberRepository;
     }
 
 
-//     테스트 용도
-//    public MemberRepository getMemberRepository() {
-//        return memberRepository;
-//    }
 }

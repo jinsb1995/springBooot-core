@@ -52,9 +52,6 @@ public class OrderServiceImpl implements OrderService{
         this.discountPolicy = discountPolicy;
     }
 
-
-
-
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
         Member member = memberRepository.findById(memberId);
@@ -66,8 +63,10 @@ public class OrderServiceImpl implements OrderService{
 
     // 테스트 용도
     public MemberRepository getMemberRepository() {
+        // 저 위에 MemoryMemberRepository가 들어갈 예정이다.
         return memberRepository;
     }
+
 
 
 }

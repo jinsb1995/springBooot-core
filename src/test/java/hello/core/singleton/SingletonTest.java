@@ -55,6 +55,36 @@ public class SingletonTest {
     }
 
 
+    @Test
+    @DisplayName("스프링 컨테이너와 싱글톤")
+    void springContainer() {
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        // 1. 조회: 호출할 때 마다 객체를 생성
+        MemberService memberService1 = ac.getBean("memberService", MemberService.class);
+        // 2. 조회: 호출할 때 마다 객체를 생성
+        MemberService memberService2 = ac.getBean("memberService", MemberService.class);
+
+        // 참조값이 같다
+
+        /*
+            스프링 컨테이너 덕분에 고객의 요청이 올 때 마다 객체를 생성하는 것이 아니라,
+            이미 만들어진 객체를 공유해서 효율적으로 재사용할 수 있다.
+            요청할 때 마다 새로운 객체를 생성해서 반환하는 기능을 제공하는건 -> 빈 스코프
+         */
+
+        /*
+            싱글톤 방식의 주의점
+            싱글톤 패턴, 컨테이너는 객체 인스턴스를 하나만 생성해서 공유하기때문에 유지하게 설계하면 안된다.
+            무상태(stateless) 하게 설계해야 한다.
+
+         */
+
+        System.out.println("memberService1 = " + memberService1);
+        System.out.println("memberService2 = " + memberService2);
+
+        // memberService1 == memberService2
+        assertThat(memberService1).isSameAs(memberService2);
+    }
 
 
 }

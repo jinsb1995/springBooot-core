@@ -1,5 +1,7 @@
 package hello.core.member;
 
+import hello.core.member.Member;
+
 public interface MemberService {
 
     // 회원가입

@@ -1,37 +1,20 @@
 package hello.core;
 
-import hello.core.discount.DiscountPolicy;
-import hello.core.member.MemberRepository;
-import hello.core.member.MemoryMemberRepository;
-import hello.core.order.OrderService;
-import hello.core.order.OrderServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 
 @Configuration
 @ComponentScan(
-//        basePackages = "hello.core.member", // 이게 없으면 모든 자바 패키지를 다 뒤지기때문에 필요한 패키지를 입력해준다.
         excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Configuration.class)
 )
 public class AutoAppConfig {
 
-//    @Autowired MemberRepository memberRepository;
-//    @Autowired DiscountPolicy discountPolicy;
-//
-//    @Bean
-//    OrderService orderService() {
-//        return new OrderServiceImpl(memberRepository, discountPolicy);
-//    }
+    /*
+        컴포넌트 스캔을 사용하면 @Configuration이 붙은 설정 정보도 자동 등록되기 때문에, AppConfig, TestConfig도 함께 등록되고 실행된다.
+        그래서 excludeFilter를 이용해서 '설정정보'는 스캔 대상에서 제외했다.
 
-
-//    @Bean(name = "memoryMemberRepository")
-//    MemberRepository memberRepository() {
-//        return new MemoryMemberRepository();
-//    }
-
-
+        @Component 어노테이션이 붙은 클래스를 스캔해서 스프링 빈으로 등록한다.
+     */
 
 }
