@@ -16,9 +16,10 @@ import org.springframework.context.annotation.Configuration;
 // Configuration이 붙은것도 빈으로 등록이 된다.
 
 /**
- *  Configuration이 없어도 CGLIB가 동작하긴 하는데
+ *  Configuration이 없어도 CGLIB가 동작하긴 하는데 -> 틀렸음. Configuration이 없으면 CGLIB가 동작하지 않음
  *  Configuration없이 @Bean 만 선언한다면  인스턴스를 새로 생성한 뒤 넣어주게 되니까 싱글톤이 깨진다.
  *
+ * 
  *  **  정리 **
  * @Bean 만 사용해도 스프링 빈으로 등록이 되지만, 싱글톤을 보장하지 않는다.
  *     memberRepository() 처럼 의존관계 주입이 필요해서 메서드를 직접 호출할 때 싱글톤을 보장하지 않는다.
